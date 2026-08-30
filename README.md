@@ -24,6 +24,17 @@ docker-compose up --build
 ```
 Приложение будет доступно на порту `8080`. (Секреты и конфигурация БД подтягиваются из файла `.env`).
 
+Если появилась ошибка 
+```bash
+FATAL: password authentication failed for user "taskmanageruser"
+```
+Скорее всего Docker переиспользует старый том (volume) базы данных, который был инициализирован ранее с другим паролем или пользователем.
+Чтобы исправить нужно выполнить команду
+```bash
+docker-compose down -v 
+```
+После удаления запустить заново
+
 Запуск локально с in-memory базой H2 (без Docker):
 ```bash
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=h2
